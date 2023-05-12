@@ -1,0 +1,25 @@
+<!--         
+ @Description        : To display the list of suppliers
+ @Modification Log   :
+===================================================================================================
+ Ver.    Date            Author         		Modification
+===================================================================================================
+  1.0     10/05/2022      Banuchandar          Component to display the list of suppliers in the page
+
+-->
+<template>
+    <button class="slds-button_reset slds-media supplier-tile"
+        aria-pressed="false"
+        onclick={showSupplierInMap}>
+        <div class="slds-p-around_medium tile-bg">
+            <li class="slds-item">
+                <lightning-tile label={supplierItem.Name} href={recordPageUrl}
+                    type="media">
+                    <lightning-icon slot="media" icon-name="custom:custom31"></lightning-icon>
+                    <p class="slds-truncate"> {supplierItem.City__c} , {supplierItem.Country__c}</p>
+                    <p class="slds-truncate">Waiting period(In days) : {supplierItem.Waiting_Period__c}</p>
+                </lightning-tile>
+            </li>
+        </div>
+    </button>
+</template>

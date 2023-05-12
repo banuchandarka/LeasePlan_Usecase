@@ -1,0 +1,77 @@
+<!--         
+ @Description        : To display the list of suppliers for the account
+ @Modification Log   :
+===================================================================================================
+ Ver.    Date            Author         		Modification
+===================================================================================================
+  1.0     10/05/2022      Banuchandar          Component to display the list of suppliers in the page
+
+-->
+<template>
+    <template if:false={isPageRendered}>
+        <lightning-spinner alternative-text="Loading Suppliers..." size="large"></lightning-spinner>
+    </template>
+    <div class="supplier-list-container">
+        <template if:true={isDataAvbl}>
+            <div class="slds-m-around_medium">
+                <lightning-layout>
+                    <lightning-layout-item size="2">
+                        <lightning-button label="Previous"
+                            icon-name="utility:chevronleft" onclick={previousHandler}></lightning-button>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6">
+                        <div class="slds-form-element__control slds-input-has-icon
+                            slds-input-has-icon_left-right">
+                            <lightning-input class="search-button" type="text" label="Search Supplier"
+                                variant="label-hidden" placeholder="Search Supplier Here..."
+                                onkeyup={searchSupplierByName}
+                                value={searchSuppliersStr}></lightning-input>
+                            <button class="slds-button slds-button_icon slds-input__icon
+                                slds-input__icon_right" title="Clear"
+                                onclick={clearSupplierSearch}>
+                                <lightning-icon icon-name="utility:clear" size="x-small"
+                                    alternative-text="Clear" title="Clear"></lightning-icon>
+                            </button>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="2" class="slds-align_absolute-center">
+                        Page {page} of {totalPage} ({totalSuppliersCount})
+                    </lightning-layout-item>
+                    <lightning-layout-item size="2">
+                        <lightning-button label="Next" icon-name="utility:chevronright"
+                            icon-position="right" onclick={nextHandler}></lightning-button>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+            <lightning-layout horizontal-align="stretch" multiple-rows="true"
+                class="x-large">
+                <lightning-layout-item size="6" >
+                    <div class="slds-p-around_medium custom-box">
+                        <ul class="slds-has-dividers_bottom-space">
+                            <template for:each={listOfSuppliersDisplayed} for:item="item">
+                                <li key={item.Id}>
+                                     <c-supplier-data supplier-item={item} onsupplierselected={sendSupplierRecordToMapMarker}>
+                                     </c-supplier-data>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="5" flexibility="grow" class="map-container">
+                    <c-map-marker-route if:true={recordId} account-record={accountRecord}></c-map-marker-route>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+    </div>
+    
+    <template if:false={isDataAvbl}>
+        <div class="slds-align_absolute-center">
+            <strong>No suppliers available.</strong> 
+        </div>
+    </template>
+    <template if:true={error}>
+        <div class="slds-text-color_error slds-align_absolute-center">
+            {error}
+        </div>
+    </template>
+</template>

@@ -1,0 +1,25 @@
+<!--         
+ @Description        : To display map and markers of account and selected supplier location
+ @Modification Log   :
+===================================================================================================
+ Ver.    Date            Author         		Modification
+===================================================================================================
+  1.0     10/05/2022      Banuchandar          Component to display map markers
+
+-->
+
+<template>    
+  <template if:false={errorMessage}>
+    <lightning-map
+        map-markers={mapMarkers}
+        markers-title={markersTitle}
+        onmarkerselect={handleMarkerSelect}
+        selected-marker-value={selectedMarkerValue} 
+        list-view="visible"
+        zoom-level="10">
+    </lightning-map>
+  </template>
+  <template if:true={errorMessage}>
+    {errorMessage}
+  </template>
+</template>
